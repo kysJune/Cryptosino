@@ -1,0 +1,19 @@
+.loginBox{
+    border: yellowgreen solid 2vw;
+    width: 45vw;
+    height: 40vh;
+    margin-left: 25vw;
+    margin-top: 12vh;
+    margin-bottom: 14vh;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    
+}
+
+/* #loginField{
+
+} */

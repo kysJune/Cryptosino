@@ -10,7 +10,6 @@ export let Home = () => {
             
             <h1 id='home-title'>Games</h1>
             <GameChoices/>
-            <Footer/>
         </div>        
     );
 }

@@ -10,8 +10,8 @@ export let Header = () =>{
             <Logo/>
 
             <div id='header-links'>
-                <a href=''>Login</a>            
-                <a href=''>Register</a>            
+                <button>Login</button>            
+                <button>Register</button>            
             </div>
             
         </div>        

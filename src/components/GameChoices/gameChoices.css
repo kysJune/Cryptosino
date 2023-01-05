@@ -3,4 +3,6 @@
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
+    justify-content: center;
+    margin-bottom: 5vh;
 }

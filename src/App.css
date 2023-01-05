@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  box-sizing:content-box;
+  align-items: center;
 }
 
 .App-logo {
@@ -36,4 +38,9 @@
   100% {
     transform: translateY(0px);
   }
+}
+
+button{
+  color: black;
+  background-color:rgb(77, 210, 47);
 }
