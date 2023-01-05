@@ -1,0 +1,8 @@
+/* css for the logo component */
+
+.siteLogo{
+    height: 150px;
+    width: 150px;
+    border: red 5px dotted;
+}
+
