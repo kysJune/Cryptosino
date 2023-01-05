@@ -6,7 +6,7 @@ export let Login= () => {
     return (
         <div className="loginBox">
             <h1>Login</h1>
-            <form action="./home" method="POST">
+            <form action="" method="POST">
                 <div>
                     <label id="emailLabel" for="emailField">email</label>
                     <input id="emailField" name="emailField" type="text"/>
