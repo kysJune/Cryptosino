@@ -1,0 +1,21 @@
+.Header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 150px;
+    align-items: center;
+}
+
+#header-links {
+    width: 10%;
+    display: flex;
+    justify-content: space-around;
+}
+
+#header-links a {
+    text-decoration: none;
+}
+
+#header-links a:hover { 
+    text-decoration: underline;
+}

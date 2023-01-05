@@ -1,0 +1,12 @@
+.GameChoice {
+    height: 50%;
+    width: 40%;
+    justify-content: center;
+    border-color: black;
+    border: dotted;
+}
+
+.GameChoice img {
+    height: 300px;
+    width: 300px;
+}
