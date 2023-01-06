@@ -6,9 +6,15 @@
     border: dotted;
     background-color: crimson;
     margin: 10px;
+    transition-property: all;
+    transition-duration: 1s;
 }
 
 .GameChoice img {
     height: 300px;
     width: 300px;
+}
+.GameChoice:hover{
+    border: solid black 3px;
+    background-color: yellow;
 }
