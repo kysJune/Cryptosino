@@ -16,6 +16,7 @@ function App() {
       <Footer/>
       <form action="../../post" method="post" 
               className="form">
+              <input type="text" name="message"/>
           <button type="submit">Connected?</button>
         </form>
     </div>
