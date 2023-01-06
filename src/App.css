@@ -2,6 +2,7 @@
   text-align: center;
   box-sizing:content-box;
   align-items: center;
+  background-color: darkgreen;
 }
 
 .App-logo {
@@ -43,4 +44,8 @@
 button{
   color: black;
   background-color:rgb(77, 210, 47);
+}
+
+button:hover{
+  color: crimson;
 }

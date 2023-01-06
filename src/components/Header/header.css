@@ -1,5 +1,5 @@
 .Header {
-    background-color: cyan;
+    background-color: yellow;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -9,9 +9,10 @@
 }
 
 #header-links {
-    width: 20vw;
+    width: 10vw;
     display: flex;
     justify-content: space-around;
+    margin-right: 3vw
 }
 
 #header-links a {
@@ -20,4 +21,10 @@
 
 #header-links a:hover { 
     text-decoration: underline;
+}
+
+#login-button, #register-button{
+    border:none;
+    background-color: yellow;
+    font-size: 30px;
 }

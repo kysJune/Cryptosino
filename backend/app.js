@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/post", (req, res) => {
   
-  console.log("Connected to React" + req.body.message);
+  console.log("Message from react: " + req.body.message);
   res.redirect("/");
 });
   
