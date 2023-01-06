@@ -11,6 +11,14 @@ app.post("/post", (req, res) => {
   console.log("Message from react: " + req.body.message);
   res.redirect("/");
 });
+
+app.post("/login", (req, res) =>{
+  console.log("email: " + req.body.email + "\n" + "password: " + req.body.password);
+  res.redirect("/"); //TODO: change this so that it redirects to the logged in page not the initial home page
+  //possibly through another component but probably just by changing state of the App component and passing
+  //the state to the Home page via isLoggedIn prop
+});
+
   
 const PORT = process.env.PORT || 8080;
   
