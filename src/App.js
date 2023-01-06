@@ -14,6 +14,10 @@ function App() {
       <Header/>
       <Home/>
       <Footer/>
+      <form action="../../post" method="post" 
+              className="form">
+          <button type="submit">Connected?</button>
+        </form>
     </div>
   );
 }
