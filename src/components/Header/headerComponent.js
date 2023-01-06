@@ -13,10 +13,13 @@ export let Header = (props) =>{
                 <button 
                     id="login-button" 
                     onClick={props.handleLogin}>
-                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <i className="fa-solid fa-right-to-bracket">{"\nlogin"}</i>
                 </button> 
                            
-                <button id="register-button"><i class="fa-solid fa-user-plus"></i></button>            
+                <button 
+                    id="register-button"
+                    onClick={props.handleRegister}>
+                    <i className="fa-solid fa-user-plus"></i></button>            
             </div>
             
         </div>        

@@ -15,12 +15,16 @@ function App() {
     else if(page === "Login"){
       pageComponent = <Login/>;
     }
+    else if(page === 'Register'){
+      pageComponent = <Register/>;
+    }
 
   return (
     <div className="App">
       <Header 
       handleLogin = {() =>{setPage("Login");}}
       goHome = {() =>{setPage("Home");}}
+      handleRegister = {() => {setPage("Register")}}
       />
      {pageComponent}
       <form action="../../post" method="post" 
