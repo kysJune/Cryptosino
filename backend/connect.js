@@ -1,6 +1,6 @@
 let mysql = require("mysql");
 const { connect } = require("react-redux");
-
+require('dotenv').config();
 
 //  let db = mysql.createPool({
 //   connectionLimit : 100, //important
@@ -10,10 +10,14 @@ const { connect } = require("react-redux");
 //     database: 'cryptosino'
 // });
 let connection=mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+    // host: process.env.DB_HOST,
+    // user: process.env.DB_USER,
+    // password: process.env.DB_PASSWORD,
+    // database: process.env.DB_NAME,
+    user: 'root',
+    password: 'jobsrus123',
+    database: 'database1',
+    host: 'localhost',
   }
 )
 
