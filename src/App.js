@@ -27,11 +27,6 @@ function App() {
       handleRegister = {() => {setPage("Register")}}
       />
      {pageComponent}
-      <form id = "test-form" action={`${process.env.REACT_APP_BASEURL}/post`} method="post" 
-              className="form">
-              <input type="text" name="message"/>
-          <button onClick = {handlesubmit}>Connected?</button>
-        </form>
         <Footer/>
     </div>
   );
