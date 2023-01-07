@@ -5,7 +5,7 @@ import { Login } from './components/Login/loginComponent';
 import { Register } from './components/Register/registerComponent';
 import { Footer } from './components/Footer/footerComponent';
 import './App.css';
-
+import { handlesubmit } from './testform';
 function App() {
   const  [page, setPage] = useState("Home");
   let pageComponent = page;
@@ -27,10 +27,10 @@ function App() {
       handleRegister = {() => {setPage("Register")}}
       />
      {pageComponent}
-      <form action="../../post" method="post" 
+      <form id = "test-form" action={`${process.env.REACT_APP_BASEURL}/post`} method="post" 
               className="form">
               <input type="text" name="message"/>
-          <button type="submit">Connected?</button>
+          <button onClick = {handlesubmit}>Connected?</button>
         </form>
         <Footer/>
     </div>

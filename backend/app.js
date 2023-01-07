@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const bodyParser = require('body-parser');
-
+require("dotenv").config();
 //middleware that handles jsx form data
 //without bodyParser there is no way to get data from an input field 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -9,7 +9,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post("/post", (req, res) => {
   
   console.log("Message from react: " + req.body.message);
-  res.redirect("/");
+  // res.redirect(req.originalUrl);
+  res.send({success: true});
 });
 
 app.post("/login", (req, res) =>{
@@ -19,6 +20,9 @@ app.post("/login", (req, res) =>{
   //the state to the Home page via isLoggedIn prop
 });
 
+app.get("/test", (req, res) =>{
+  res.send("hello");
+});
   
 const PORT = process.env.PORT || 8080;
   
