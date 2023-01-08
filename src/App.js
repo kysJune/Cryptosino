@@ -5,7 +5,7 @@ import { Login } from './components/Login/loginComponent';
 import { Register } from './components/Register/registerComponent';
 import { Footer } from './components/Footer/footerComponent';
 import './App.css';
-import { handlesubmit } from './testform';
+
 function App() {
   const  [page, setPage] = useState("Home");
   let pageComponent = page;
