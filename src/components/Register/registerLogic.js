@@ -2,12 +2,29 @@
 //validates the form by making sure that the password and confirmpassword match
 //that the email is valid.
 //that there is no mysql injection in either email or password fields
-export let isValidCredentials = (email, password, confirmPassword ) =>{
+
+
+function isValidEmail(uemail){
+    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if(uemail.value.match(mailformat))
+    {
+        return true;
+    }
+    else{
+        alert("You have entered an invalid email address!");
+        return false;
+    }
+}
+export let isValidCredentials = (formValues ) =>{
    
     let isValid = true;
-    if(password != confirmPassword){
+    if(formValues.password != formValues.confirmPassword){
         isValid = false;
     }
-     //TODO: check against mysql injections using regex
+    if(!isValidEmail(formValues.email)){
+        isValid =  false;
+    }
+    
     return isValid;
 }
+

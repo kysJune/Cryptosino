@@ -7,6 +7,8 @@ require("dotenv").config();
 // app.use(bodyParser.urlencoded({ extended: true }));
 
 
+//handle user registering
+app.post(`https://localhost:${process.env.PORT}/`,  )
 
 app.post("/login", (req, res) =>{
   console.log("email: " + req.body.email + "\n" + "password: " + req.body.password);
