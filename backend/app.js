@@ -1,17 +1,12 @@
 const express = require("express");
 const app = express();
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 require("dotenv").config();
 //middleware that handles jsx form data
 //without bodyParser there is no way to get data from an input field 
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post("/post", (req, res) => {
-  
-  console.log("Message from react: " + req.body.message);
-  // res.redirect(req.originalUrl);
-  res.send({success: true});
-});
+
 
 app.post("/login", (req, res) =>{
   console.log("email: " + req.body.email + "\n" + "password: " + req.body.password);

@@ -1,5 +1,5 @@
 let mysql = require("mysql");
-const { connect } = require("react-redux");
+
 require('dotenv').config();
 
 //  let db = mysql.createPool({
