@@ -4,9 +4,9 @@
 //that there is no mysql injection in either email or password fields
 
 
-function isValidEmail(uemail){
+function isValidEmail(email){
     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if(uemail.value.match(mailformat))
+    if(email.match(mailformat))
     {
         return true;
     }
@@ -24,7 +24,7 @@ export let isValidCredentials = (formValues ) =>{
     if(!isValidEmail(formValues.email)){
         isValid =  false;
     }
-    
+
     return isValid;
 }
 

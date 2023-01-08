@@ -3,9 +3,10 @@ import React, {useState} from "react";
 import "./register.css"
 import { isValidCredentials } from "./registerLogic";
 import Axios from "axios";
-export let Register= (props) => {
+
+export let Register = (props) => {
     //state object that holds the current values in the form's input fields
-    const [formValues, setFormValues] = useState({
+    const [data, setData] = useState({
         email: "",
         password: "",
         confirmPassword: "",
@@ -13,24 +14,25 @@ export let Register= (props) => {
 
     //updates a field in the state object mentioned above 
     let handleChange = (e) =>{
-        let temp = {...formValues};
+        let temp = {...data};
         temp[e.target.id] = e.target.value;
-        setFormValues(temp);
-        console.log(formValues);
+        setData(temp);
+        console.log(data);
     }
 
     //submits the form data to the backend for further validation
-    let  handleSubmit = async (e) =>{
+    //and subsequent injection into user table
+    let handleSubmit = async (e) =>{
         e.preventDefault();
         //validate the form values
-        if(!isValidCredentials(formValues)){
+        if(!isValidCredentials(data)){
             console.log("user entered invalid credentials");
             return;
         }
         //push the credentials to the backend 
         try {
-            const response = await Axios.post(`${process.env.REACT_APP_BASEURL}/user/`, formValues );
-            console.log(response);
+            const response = await Axios.post(`${process.env.REACT_APP_BASEURL}/user/register`, data );
+            console.log(response); // {success: true}
           } catch (error) {
             console.error(error);
           }
@@ -41,16 +43,16 @@ export let Register= (props) => {
             <h1>Register</h1>
             <form id="registration-form" onSubmit={(e) => handleSubmit(e)}>
                 <div id="regis-email">
-                    <label id="emailLabel" for="emailField">Email</label>
-                    <input id="email" name="emailField" type="email" onChange={(e) => handleChange(e)} value={formValues.email} required/>
+                    <label id="emailLabel" htmlFor="emailField">Email</label>
+                    <input id="email" name="emailField" type="email" onChange={(e) => handleChange(e)} value={data.email} required/>
                 </div>
                 <div id="regis-password">
-                    <label id="passwordLabel" for="passwordField">Password</label>
-                    <input id="password" name="passwordField" type="password" onChange={(e) => handleChange(e)} value={formValues.password} required/>
+                    <label id="passwordLabel" htmlFor="passwordField">Password</label>
+                    <input id="password" name="passwordField" type="password" onChange={(e) => handleChange(e)} value={data.password} required/>
                 </div>
                 <div id="regis-confirm-password">
-                    <label id="passwordConfirmLabel" for="passwordConfirmField">Password Confirm</label>
-                    <input id="confirmPassword" name="passwordConfirmField" type="password"  onChange={(e) => handleChange(e)} value={formValues.confirmPassword} required/>
+                    <label id="passwordConfirmLabel" htmlFor="passwordConfirmField">Password Confirm</label>
+                    <input id="confirmPassword" name="passwordConfirmField" type="password"  onChange={(e) => handleChange(e)} value={data.confirmPassword} required/>
                 </div>
                 <button id="registerButton" type="submit">Register</button>
                 
