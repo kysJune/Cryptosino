@@ -67,7 +67,11 @@ let sql = "SELECT * FROM users WHERE email = '" + email + "'";
             
             //change the state of the header component in the front end
             //}
-            res.send({success: true});
+            res.send({
+              success: true,
+              userEmail: email,
+              userPassword: password
+            });
         }
     });
   });
