@@ -1,14 +1,16 @@
-let mysql = require("mysql");
+let mysql = require("mysql2");
 
 require('dotenv').config();
 
  let db = mysql.createPool({
   connectionLimit : 100, //important
-    host: 'localhost',
-    user: 'root',
-    password: 'CleveM3bby!',
-    database: 'cryptosino'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT,
 });
+
 // let connection=mysql.createConnection({
 //     host: process.env.DB_HOST,
 //     user: process.env.DB_USER,
