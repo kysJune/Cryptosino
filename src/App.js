@@ -28,7 +28,7 @@ function App() {
       />
      {pageComponent}
         <Footer/>
-    </div>
+      </div>
   );
 }
 

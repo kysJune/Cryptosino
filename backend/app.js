@@ -2,6 +2,7 @@ const {db} = require("./connect");
 const express = require("express");
 const app = express();
 const cors = require('cors');
+const bcrypt = require('bcryptjs'); //for encrypting user password
 // const bodyParser = require('body-parser');
 require("dotenv").config();
 //middleware that handles jsx form data
@@ -16,16 +17,16 @@ app.use(express.json());
 app.use(cors());
 
 //handle user registering
-app.post(`http://localhost:${process.env.PORT}/user/register`, (req, res) =>{
+app.post(`/user/register`, (req, res) =>{
+ 
 //get the user info from the request
 let email = req.body.email;
 let password = req.body.password;
 //check if the email already exists in the database
 let emailExists = false;
 //create sql select query
-let sql = "SELECT * FROM 'users' WHERE 'email' = " + email;
+let sql = "SELECT * FROM users WHERE email = '" + email + "'";
 //query the database
-db.getConnection((err, connection) =>{
   db.getConnection((err, connection) => {
     if(err) throw err;
     console.log('connected as id ' + connection.threadId);
@@ -33,31 +34,49 @@ db.getConnection((err, connection) =>{
         connection.release(); // return the connection to pool
         if(err) throw err;
         console.log('The data from users table are: \n', rows);
-        if(rows.length > 0){
+        if(Object.keys(rows).length > 0){
+          console.log("the email exists");
           emailExists = true;
+        }
+          if(emailExists){
+            console.log("in here");
+            //then the email is already taken 
+            //tell the user that the email is already taken
+  
+            //(do not insert new credentials into the table)
+            res.send({success: false});
+            return;
+          }
+          else{
+            console.log("inserting new user into database");
+            //hash the password
+            let hashedPassword =  bcrypt.hashSync(password, 10);
+            //create sql insert query
+            sql = "INSERT INTO users (email, password) VALUES ('" + email + "', '" + hashedPassword + "')";
+            //query the sql connection pool to try inserting the new user info into the user table
+            db.getConnection((err, connection) =>{
+              if(err) throw err;
+              connection.query(sql, (err, rows) =>{
+                connection.release(); // return the connection to pool     
+                if(err) throw err;
+              });
+            });
+            //if the result of the query is good, then {
+          
+            //redirect the user to the Home page again 
+            
+            //change the state of the header component in the front end
+            //}
+            res.send({success: true});
         }
     });
   });
+
+
 });
-//if the result length is greater than 0 
-if(emailExists){
-  //then the email is already taken 
-  //tell the user that the email is already taken
-  alert("email already exists. Either log in to your account or register with a different email.");
-  //(do not insert it into the table)
-  return;
-}
-//create sql insert query
-let  = "INSERT email' INTO "
-//query the sql connection pool to try inject the new user info into the user table
 
-//if the result of the query is good, then {
 
-//redirect the user to the Home page again 
 
-//change the state of the header component in the front end
-//}
-} );
 
 app.post("/login", (req, res) =>{
   console.log("email: " + req.body.email + "\n" + "password: " + req.body.password);

@@ -2,14 +2,14 @@
 import React, {useState} from "react";
 import "./register.css"
 import { isValidCredentials } from "./registerLogic";
-import Axios from "axios";
+import axios from "axios";
 
 export let Register = (props) => {
     //state object that holds the current values in the form's input fields
     const [data, setData] = useState({
         email: "",
         password: "",
-        confirmPassword: "",
+        confirmPassword: ""
     });
 
     //updates a field in the state object mentioned above 
@@ -31,7 +31,7 @@ export let Register = (props) => {
         }
         //push the credentials to the backend 
         try {
-            const response = await Axios.post(`${process.env.REACT_APP_BASEURL}/user/register`, data );
+            const response = await axios.post(`${process.env.REACT_APP_BASEURL}/user/register`, {email: data.email, password: data.password} );
             console.log(response); // {success: true}
           } catch (error) {
             console.error(error);
