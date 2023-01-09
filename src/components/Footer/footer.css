@@ -1,9 +1,16 @@
 .Footer {
-    background-color: yellow;
+    background-color: black;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     height: 10vh;
     width: 100vw;
     align-items: center;
+  
+}
+.Footer >*{
+    color: white;
+}
+.Footer >*:hover {
+    color: red;
 }

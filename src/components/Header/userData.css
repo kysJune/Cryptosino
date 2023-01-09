@@ -1,12 +1,29 @@
 #user-data{
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
     height: 15vh;
-    width: 200px;
+    width: 350px;
     justify-content: space-evenly;
     align-items: center;
-    background-color: crimson;
+    background-color: black;
     color: white;
 }
 
+.container{
+    height: inherit;
+    width: inherit;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#user-data a{
+    color: white;
+    text-decoration: none;
+}
+
+
+#logout-button{
+    height: 40px;
+    width: 80px;
+}

@@ -1,11 +1,12 @@
 .Header {
-    background-color: yellow;
+    background-color: black;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     height: 15vh;
     width: 100vw;
     align-items: center;
+    color: white;
 }
 
 #header-links {
@@ -25,6 +26,11 @@
 
 #login-button, #register-button{
     border:none;
-    background-color: yellow;
+    background-color: black;
     font-size: 30px;
+    color: white;
 }
+#login-button:hover, #register-button:hover{
+    color: red;
+}
+

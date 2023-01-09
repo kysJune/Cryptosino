@@ -3,11 +3,11 @@
     width: 40%;
     justify-content: center;
     border-color: black;
-    border: dotted;
-    background-color: crimson;
+    background-color: #e7d598;
     margin: 10px;
     transition-property: all;
     transition-duration: 1s;
+    box-shadow: 10px 10px black;
 }
 
 .GameChoice img {
@@ -15,6 +15,7 @@
     width: 300px;
 }
 .GameChoice:hover{
-    border: solid black 3px;
-    background-color: yellow;
+    border: solid black 1px;
+    background-color: #a58d00;
+    box-shadow: none;
 }

@@ -1,0 +1,17 @@
+@keyframes blinking {
+    0%   {background-color: red;}
+    47%  {background-color: yellow; height: 55px; width: 55px;}
+    62%  {background-color: red;}
+    97%   {background-color: red;}
+    100% {background-color: red;}
+  }
+
+  .does-blink{
+    border: black solid 2px;
+    background-color: red ;
+    animation: blinking infinite 1s linear;
+    height: 50px;
+    width: 50px;
+    border-radius: 100px;
+    transition-duration: 0s;
+  }

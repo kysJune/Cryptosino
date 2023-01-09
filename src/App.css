@@ -1,8 +1,16 @@
+/* color scheme 
+
+
+/* main background: ff3300
+header and footer background: */
+
+
 .App {
   text-align: center;
   box-sizing:content-box;
   align-items: center;
-  background-color: darkgreen;
+  background-color: rgb(8, 105, 8);
+ 
 }
 
 .App-logo {

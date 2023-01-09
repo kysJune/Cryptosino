@@ -6,7 +6,7 @@ export let HeaderLinks = (props) =>{
                 <button 
                     id="login-button" 
                     onClick={props.handleLogin}>
-                    <i className="fa-solid fa-right-to-bracket">{"\nlogin"}</i>
+                    <i className="fa-solid fa-right-to-bracket"></i>
                 </button> 
                            
                 <button 
