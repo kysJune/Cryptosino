@@ -1,26 +1,19 @@
 //header component 
 import React from 'react';
 import {Logo} from '../Logo/logoComponent';
-import "./header.css"
+import "./header.css";
+import { HeaderLinks } from './headerLinksComponent';
+import { UserData } from './userDataComponent';
 
 export let Header = (props) =>{
+   
     return(
         <div className="Header">
             
             <Logo handleClick={props.goHome}/>
-
-            <div id='header-links'>
-                <button 
-                    id="login-button" 
-                    onClick={props.handleLogin}>
-                    <i className="fa-solid fa-right-to-bracket">{"\nlogin"}</i>
-                </button> 
-                           
-                <button 
-                    id="register-button"
-                    onClick={props.handleRegister}>
-                    <i className="fa-solid fa-user-plus"></i></button>            
-            </div>
+         
+            {(!props.isLoggedIn) ? <HeaderLinks handleLogin = {props.handleLogin} handleRegister = {props.handleRegister}/> :
+             <UserData data={props.data}/>}
             
         </div>        
     );

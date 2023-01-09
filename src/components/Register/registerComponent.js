@@ -33,6 +33,10 @@ export let Register = (props) => {
         try {
             const response = await axios.post(`${process.env.REACT_APP_BASEURL}/user/register`, {email: data.email, password: data.password} );
             console.log(response); // {success: true}
+            if(response.data.success === true){
+                props.logIn({...data, isLoggedIn: true});
+                props.goHome();
+            }
           } catch (error) {
             console.error(error);
           }

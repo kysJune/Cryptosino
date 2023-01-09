@@ -1,0 +1,12 @@
+#user-data{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 15vh;
+    width: 200px;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: crimson;
+    color: white;
+}
+
