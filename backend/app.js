@@ -18,75 +18,105 @@ app.use(cors());
 
 //handle user registering
 app.post(`/user/register`, (req, res) =>{
- 
-//get the user info from the request
-let email = req.body.email;
-let password = req.body.password;
-//check if the email already exists in the database
-let emailExists = false;
-//create sql select query
-let sql = "SELECT * FROM users WHERE email = '" + email + "'";
-//query the database
-  db.getConnection((err, connection) => {
-    if(err) throw err;
-    console.log('connected as id ' + connection.threadId);
-    connection.query(sql, (err, rows) => {
-        connection.release(); // return the connection to pool
-        if(err) throw err;
-        console.log('The data from users table are: \n', rows);
-        if(Object.keys(rows).length > 0){
-          console.log("the email exists");
-          emailExists = true;
-        }
-          if(emailExists){
-            console.log("in here");
-            //then the email is already taken 
-            //tell the user that the email is already taken
-  
-            //(do not insert new credentials into the table)
-            res.send({success: false});
-            return;
+  //get the user info from the request
+  let email = req.body.email;
+  let password = req.body.password;
+  //check if the email already exists in the database
+  let emailExists = false;
+  //create sql select query
+  let sql = "SELECT * FROM users WHERE email = '" + email + "'";
+  //query the database
+    db.getConnection((err, connection) => {
+      if(err) throw err;
+      console.log('connected as id ' + connection.threadId);
+      connection.query(sql, (err, rows) => {
+          connection.release(); // return the connection to pool
+          if(err) throw err;
+          console.log('The data from users table are: \n', rows);
+          if(Object.keys(rows).length > 0){
+            console.log("the email exists");
+            emailExists = true;
           }
-          else{
-            console.log("inserting new user into database");
-            //hash the password
-            let hashedPassword =  bcrypt.hashSync(password, 10);
-            //create sql insert query
-            sql = "INSERT INTO users (email, password) VALUES ('" + email + "', '" + hashedPassword + "')";
-            //query the sql connection pool to try inserting the new user info into the user table
-            db.getConnection((err, connection) =>{
-              if(err) throw err;
-              connection.query(sql, (err, rows) =>{
-                connection.release(); // return the connection to pool     
+            if(emailExists){
+              console.log("in here");
+              //then the email is already taken 
+              //tell the user that the email is already taken
+    
+              //(do not insert new credentials into the table)
+              res.send({success: false});
+              return;
+            }
+            else{
+              console.log("inserting new user into database");
+              //hash the password
+              let hashedPassword =  bcrypt.hashSync(password, 10);
+              //create sql insert query
+              sql = "INSERT INTO users (email, password) VALUES ('" + email + "', '" + hashedPassword + "')";
+              //query the sql connection pool to try inserting the new user info into the user table
+              db.getConnection((err, connection) =>{
                 if(err) throw err;
+                connection.query(sql, (err, rows) =>{
+                  connection.release(); // return the connection to pool     
+                  if(err) throw err;
+                });
               });
-            });
-            //if the result of the query is good, then {
-          
-            //redirect the user to the Home page again 
+              //if the result of the query is good, then {
             
-            //change the state of the header component in the front end
-            //}
-            res.send({
-              success: true,
-              userEmail: email,
-              userPassword: password
-            });
-        }
+              //redirect the user to the Home page again 
+              
+              //change the state of the header component in the front end
+              //}
+              res.send({
+                success: true,
+                userEmail: email,
+                userPassword: hashedPassword
+              });
+          }
+      });
     });
-  });
-
-
 });
 
 
 
 
-app.post("/login", (req, res) =>{
-  console.log("email: " + req.body.email + "\n" + "password: " + req.body.password);
-  res.redirect("/"); //TODO: change this so that it redirects to the logged in page not the initial home page
-  //possibly through another component but probably just by changing state of the App component and passing
-  //the state to the Home page via isLoggedIn prop
+app.post("/user/login", (req, res) => {
+  
+  let email = req.body.email;
+  let password = req.body.password;
+  let hashedPassword = bcrypt.hashSync(password, 10);
+
+  console.log("email: " + email + "\n" + "password: " + password);
+
+  let sql = "SELECT password FROM users WHERE email = '" + email + "'";
+
+  db.getConnection((err, connection) => {
+    if (err) throw err;
+    connection.query(sql, (err, rows) => {
+      connection.release(); // release the connection pool
+      if (err) throw err;
+      if (Object.keys(rows).length <= 0) {
+        console.log("Accound doesnt exist with this email");
+        res.send({success: false});
+      }
+      else {
+        // account exists with this email
+        bcrypt.compare(password, rows[0], function(err, result) {
+
+          console.log(result);
+
+        });
+
+        console.log("account exists");
+        res.send({
+          success: true,
+          userEmail: email,
+          userPassword: hashedPassword,
+        });
+      }
+    });
+
+    
+  })
 });
 
 app.get("/test", (req, res) =>{
