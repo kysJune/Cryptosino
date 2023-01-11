@@ -12,7 +12,8 @@
     position:relative;
     left: 0;
     top:0;
-    background-image: url("../../../public/bordertwinkle.jpg");
+    margin:10px;
+    background-image: url("../../../../public/bordertwinkle.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

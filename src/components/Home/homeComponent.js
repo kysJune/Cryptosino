@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { BlinkingSquare } from '../BlinkingSquare/blinkingSquareComponent';
-import { BorderTwinkle } from '../BorderTwinkle/borderTwinkleComponent';
+import { BlinkingSquare } from '../animationComponents/BlinkingSquare/blinkingSquareComponent';
+import { BorderTwinkle } from '../animationComponents/BorderTwinkle/borderTwinkleComponent';
 import { GameChoices } from '../GameChoices/gameChoicesComponents';
 import "./home.css";
 export let Home = (props) => {
