@@ -1,17 +1,36 @@
 @keyframes blinking {
     0%   {background-color: red;}
-    47%  {background-color: yellow; height: 55px; width: 55px;}
+    47%  {background-color: yellow; }
     62%  {background-color: red;}
     97%   {background-color: red;}
     100% {background-color: red;}
   }
 
   .does-blink{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     border: black solid 2px;
     background-color: red ;
-    animation: blinking infinite 1s linear;
-    height: 50px;
-    width: 50px;
+    animation: blinking infinite .5s linear;
+    height: 40px;
+    width: 40px;
     border-radius: 100px;
     transition-duration: 0s;
+    box-shadow: 5px 5px black;
+  }
+
+  .inner-circle{
+    z-index: 2;
+    height: 30px;
+    width: 30px;
+    border-radius: 100px;
+    background-color: black;
+    color: white;
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
   }

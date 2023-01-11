@@ -1,8 +1,24 @@
 /* css for the logo component */
 
+
+
+@keyframes flashing {
+    from {opacity: 0;}
+    50% {opacity: 1;}
+    to {opacity:0;}
+}
+
+
 .siteLogo{
     height: 15vh;
-    /* border: red 5px dotted; */
     margin-left: 5vw;
+    animation: flashing infinite .5s;
+    background-image: url("../../../public/casinoLogo.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 10vw;
 }
+
+
 

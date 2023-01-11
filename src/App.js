@@ -14,10 +14,12 @@ function App() {
     balance: 0,
     isLoggedIn: false,
   });
-
+  let goToGame = (gameName) =>{
+    setPage(gameName);
+  }
   let pageComponent = page;
     if( page === "Home" ){
-      pageComponent = <Home/>;
+      pageComponent = <Home goToGame = {goToGame}/>;
     }
     else if(page === "Login"){
       pageComponent = <Login  goHome={() => {setPage("Home"); }} logIn = {(newUser) => setUser(newUser)}/>;

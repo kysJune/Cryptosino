@@ -1,15 +1,20 @@
 .registerBox{
-    border: yellowgreen solid 2vw;
+    border: black solid 3px;
     width: 45vw;
-    height: 40vh;
+    height: 45vh;
     margin-left: 25vw;
     margin-top: 12vh;
     margin-bottom: 14vh;
+    background-color: blanchedalmond;
 }
 
 form{
+    height: 60%;
+    width: inherit;
     display: flex;
     flex-direction: column;
     align-items:center;
-    
+    justify-content: space-around;
 }
+
+

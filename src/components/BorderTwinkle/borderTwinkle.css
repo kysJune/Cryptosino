@@ -1,0 +1,21 @@
+
+@keyframes left-to-right{
+    from {left: 0}
+    50% {left: 50%}
+    to{left: 100%}
+}
+
+
+.border-twinkle{
+    height: 50px;
+    width: 50px;
+    position:relative;
+    left: 0;
+    top:0;
+    background-image: url("../../../public/bordertwinkle.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    animation: left-to-right infinite 5s linear;
+
+}

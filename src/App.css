@@ -3,13 +3,21 @@
 
 /* main background: ff3300
 header and footer background: */
-
+@keyframes background-toggle{
+  0%   {background-color: yellow}
+  25%  {background-color: orange}
+  50%  {background-color: orangered}
+  75%  {background-color:red;}
+  100%  {background-color: yellow}
+}
 
 .App {
   text-align: center;
   box-sizing:content-box;
   align-items: center;
-  background-color: rgb(8, 105, 8);
+  background-color:mediumaquamarine;
+  animation: background-toggle infinite 3s linear;
+  transition: background-color .2s;
  
 }
 
