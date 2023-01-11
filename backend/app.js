@@ -79,13 +79,13 @@ app.post(`/user/register`, (req, res) =>{
 
 
 
-app.post("/user/login", (req, res) => {
+app.get("/user/login", (req, res) => {
   
-  let email = req.body.email;
-  let password = req.body.password;
-  let hashedPassword = bcrypt.hashSync(password, 10);
+  let email = req.query.email;
+  let password = req.query.password;
+  
 
-  console.log("email: " + email + "\n" + "password: " + password);
+  console.log("email: " +  email + "\n" + "password: " + password);
 
   let sql = "SELECT password FROM users WHERE email = '" + email + "'";
 
@@ -94,28 +94,34 @@ app.post("/user/login", (req, res) => {
     connection.query(sql, (err, rows) => {
       connection.release(); // release the connection pool
       if (err) throw err;
-      if (Object.keys(rows).length <= 0) {
+      if (Object.keys(rows).length == 0) {
         console.log("Accound doesnt exist with this email");
         res.send({success: false});
+        return;
       }
       else {
         // account exists with this email
-        bcrypt.compare(password, rows[0], function(err, result) {
-
+        bcrypt.compare(password, rows[0].password, function(err, result) {
+          console.log(rows[0]);
           console.log(result);
-
-        });
-
-        console.log("account exists");
-        res.send({
-          success: true,
-          userEmail: email,
-          userPassword: hashedPassword,
+          //TODO: send the success ojbect otherwise send the failure object
+          if(result == true){
+            //send success object
+            console.log("account exists");
+            res.send({
+              success: true,
+              userEmail: email,
+              userPassword: rows[0].password,
+            });
+            return;
+          }
+          else{
+            console.log("wrong password");
+            res.send({success: false});
+          }
         });
       }
     });
-
-    
   })
 });
 

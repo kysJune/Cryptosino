@@ -18,7 +18,7 @@ export let Home = (props) => {
                 <BlinkingSquare/>
                 <BlinkingSquare/>
                 <BlinkingSquare/>
-             
+                
             </div>
             <h1 id='home-title'>Games</h1>
             <GameChoices goToGame={props.goToGame}/>
