@@ -9,7 +9,6 @@ export let Footer = () =>{
             <a href=''>About</a>
             <a href=''>FAQ</a>
             <a href=''>Contact Us</a>
-            
         </div>        
     );
 }

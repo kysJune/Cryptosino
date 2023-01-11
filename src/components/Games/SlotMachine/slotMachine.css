@@ -1,0 +1,34 @@
+.SlotMachine{
+    height: 100%;
+    width: 100%;
+}
+
+.machine-holder{
+    margin: auto;
+    height: 475px;
+    width: 500px;
+    background: url("../../../../public/slotmachineimage.png") no-repeat center;
+    background-size: cover;
+    position:relative;
+}
+
+#slot-machine-balance{
+    color: white;
+    font-size: 24px;
+    position: absolute;
+    bottom:0;
+    right: 10%;
+}
+
+@keyframes flickering {
+    0%{color: blue}
+    25% {color:aqua}
+    50% {color:white}
+    75%{color:blueviolet}
+    100% {color:purple}
+}
+
+#slot-machine-jackpot{
+    animation: flickering .5s infinite;
+}
+

@@ -5,6 +5,7 @@ import { Login } from './components/Login/loginComponent';
 import { Register } from './components/Register/registerComponent';
 import { Footer } from './components/Footer/footerComponent';
 import './App.css';
+import { SlotMachine } from './components/Games/SlotMachine/slotMachineComponent';
 
 function App() {
   const  [page, setPage] = useState("Home");
@@ -26,6 +27,10 @@ function App() {
     }
     else if(page === 'Register'){
       pageComponent = <Register goHome={() => {setPage("Home");}} logIn = {(newUser) => {setUser(newUser); console.log(newUser);}}/>;
+    }
+
+    else if(page ==='Slot Machine'){
+      pageComponent = <SlotMachine/>;
     }
 
   return (
