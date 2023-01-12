@@ -14,7 +14,7 @@ export let Login= (props) => {
             const response = await axios.get(`${process.env.REACT_APP_BASEURL}/user/login`, {params: {email: data.email, password: data.password} } );
             console.log(response); // {success: true}
             if(response.data.success === true){
-                props.logIn({email: response.data.userEmail, password: response.data.userPassword, isLoggedIn: true});
+                props.logIn({email: response.data.userEmail, password: response.data.userPassword, isLoggedIn: true,  balance: response.data.userBalance});
                 props.goHome();
             }
           } catch (error) {

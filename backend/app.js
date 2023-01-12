@@ -69,7 +69,8 @@ app.post(`/user/register`, (req, res) =>{
               res.send({
                 success: true,
                 userEmail: email,
-                userPassword: hashedPassword
+                userPassword: hashedPassword,
+                userBalance: 0
               });
           }
       });
@@ -87,7 +88,7 @@ app.get("/user/login", (req, res) => {
 
   console.log("email: " +  email + "\n" + "password: " + password);
 
-  let sql = "SELECT password FROM users WHERE email = '" + email + "'";
+  let sql = "SELECT password, balance FROM users WHERE email = '" + email + "'";
 
   db.getConnection((err, connection) => {
     if (err) throw err;
@@ -112,6 +113,7 @@ app.get("/user/login", (req, res) => {
               success: true,
               userEmail: email,
               userPassword: rows[0].password,
+              userBalance: rows[0].balance
             });
             return;
           }
