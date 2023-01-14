@@ -23,4 +23,3 @@ export let rotateOne = (wheelValues) =>{
     
 }
 
-
