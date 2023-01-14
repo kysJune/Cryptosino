@@ -3,6 +3,8 @@ import "./slotMachineLogic";
 import "./slotMachine.css";
 import { Wheel } from "./wheelComponent";
 import { startSpinning } from "./slotMachineLogic";
+import { rotateOne } from "./slotMachineLogic";
+
 export let SlotMachine = () =>{
     return (
         <div className = "SlotMachine">
@@ -16,6 +18,9 @@ export let SlotMachine = () =>{
                 </div>
                 <p id="slot-machine-balance">balance: $500.43</p>
                 <button id="start-slot-machine-button" onClick={() =>{ startSpinning();}}>
+                <button id="start-slot-machine-button" onClick={()=> {
+                    rotateOne("wheel1")
+                }}>
                     SPIN
                 </button>
             </div>

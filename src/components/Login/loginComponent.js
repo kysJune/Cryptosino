@@ -17,9 +17,9 @@ export let Login= (props) => {
                 props.logIn({email: response.data.userEmail, password: response.data.userPassword, isLoggedIn: true,  balance: response.data.userBalance});
                 props.goHome();
             }
-          } catch (error) {
+        } catch (error) {
             console.error(error);
-          }
+        }
     };
     let handleChange = (e) =>{
         let temp = {...data};
