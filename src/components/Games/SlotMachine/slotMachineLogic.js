@@ -27,10 +27,10 @@ export let rotateOne = (wheelId) =>{
     var children = wheelValues.children;
     
     for (let i = 0; i < children.length; ++i) {
-        console.log(children[i].style.transform)
+        console.log(children[i].style.transform);
         let oldpos = parseInt(children[i].getAttribute('position'), 10);
-        console.log(oldpos+1)
-        if (oldpos === children.length - 1) {
+        console.log(oldpos+1);
+        if (oldpos == children.length - 1) {
             children[i].setAttribute('position', 0);
         }
         else {
@@ -41,4 +41,40 @@ export let rotateOne = (wheelId) =>{
         children[i].style.transform = "translateY(" + newPos + "%)";
     }
 }
+
+//audio sound effects for slot machine game
+
+let leverSound = new Audio("../../../../slotmachine-lever.m4a");
+let spinningSound = new Audio("../../../../slotmachine-spinning.m4a");
+let dispenseWinningSound = new Audio("../../../../slotmachine-win-dispensing.m4a");
+
+export let playLever = () =>{
+    leverSound.play();
+}
+
+export let playSpinning = () =>{
+    spinningSound.play();
+}
+
+let disableSpinButton = (e) =>{
+    e.target.disabled = true;
+    e.target.style.backgroundColor = "grey";
+}
+
+let enableSpinButton = (e) =>{
+    e.target.disabled = false;
+    e.target.style.backgroundColor = "green";
+}
+
+export let startSpinning = (e) =>{
+    disableSpinButton(e);
+    playLever();
+    setTimeout(playSpinning, leverSound.duration*1000);
+    setTimeout(() => enableSpinButton(e), 5000);
+}
+
+export let playDispenseWinnings = () => {
+    dispenseWinningSound.play();
+}
+
 
