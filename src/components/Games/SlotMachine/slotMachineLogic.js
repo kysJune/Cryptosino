@@ -69,8 +69,8 @@ let enableSpinButton = (e) =>{
 export let startSpinning = (e) =>{
     disableSpinButton(e);
     playLever();
-    setTimeout(playSpinning, leverSound.duration*1000);
-    setTimeout(() => enableSpinButton(e), 5000);
+    setTimeout(playSpinning, leverSound.duration * 1000 - 500);
+    setTimeout(() => enableSpinButton(e), spinningSound.duration * 1000 + 500);
 }
 
 export let playDispenseWinnings = () => {
