@@ -2,8 +2,8 @@ import React from "react";
 import "./slotMachineLogic";
 import "./slotMachine.css";
 import { Wheel } from "./wheelComponent";
-import { spinAllWheels, startSpinningMusic } from "./slotMachineLogic";
-import { rotateOne } from "./slotMachineLogic";
+import { spinAllWheels } from "./slotMachineLogic";
+
 
 export let SlotMachine = () =>{
     return (
