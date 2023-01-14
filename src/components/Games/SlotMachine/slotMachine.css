@@ -70,7 +70,13 @@
 .wheel-value{
     height: 110px;
     width: 110px;
-    background-size:cover;
+    background-size: cover;
     background-position: center;
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
+    position: absolute;
+    top:0px;
+    left: 20px;
+    transition-property: all;
+    transition-duration: 3s;
+    transition-delay: 1s;
 }

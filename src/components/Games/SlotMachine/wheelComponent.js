@@ -5,7 +5,7 @@ import "./slotMachine.css";
 export let Wheel = (props) => {
     let index = 0;
     return (
-        <div className="Wheel">
+        <div className="Wheel" id={`wheel-${props.wheelid}`}>
         { 
             wheelValues.map( (value) => {
                 return (

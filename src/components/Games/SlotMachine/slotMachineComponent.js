@@ -2,7 +2,7 @@ import React from "react";
 import "./slotMachineLogic";
 import "./slotMachine.css";
 import { Wheel } from "./wheelComponent";
-import { startSpinning } from "./slotMachineLogic";
+import { spinAllWheels, startSpinningMusic } from "./slotMachineLogic";
 import { rotateOne } from "./slotMachineLogic";
 
 export let SlotMachine = () =>{
@@ -12,12 +12,12 @@ export let SlotMachine = () =>{
             <h2 id="slot-machine-jackpot">Current Jackpot: $5,000,000</h2>
             <div className="machine-holder">
                 <div id="wheels-holder">
-                    <Wheel/>
-                    <Wheel/>
-                    <Wheel/>
+                    <Wheel wheelid="1" />
+                    <Wheel wheelid="2"/>
+                    <Wheel wheelid="3"/>
                 </div>
                 <p id="slot-machine-balance">balance: $500.43</p>
-                <button id="start-slot-machine-button" onClick={(e) =>{ startSpinning(e);  rotateOne("wheel1");}}>
+                <button id="start-slot-machine-button" onClick={(e) =>{ spinAllWheels(e);}}>
                     SPIN
                 </button>
             </div>
