@@ -73,7 +73,7 @@ app.post(`/user/register`, (req, res) =>{
                 success: true,
                 userEmail: email,
                 userPassword: hashedPassword,
-                userBalance: 0
+                userBalance: 5
               });
           }
       });
@@ -134,9 +134,9 @@ app.get("/user/login", (req, res) => {
 
 //BALANCE ROUTES
 
-app.get('user/balance', getBalance);
+app.get('/user/balance', getBalance);
 
-app.post('user/balance/update', saveBalance);
+app.post('/user/balance/update', saveBalance);
 
 //END BALANCE ROUTES
 

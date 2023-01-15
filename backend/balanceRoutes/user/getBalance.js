@@ -1,8 +1,9 @@
-const {db} = require("./connect");
+const {db} = require("../../connect");
 
 
 //returns the balance of a user
 let getBalance = async (req, res) =>{
+    console.log("made it in the getBalance route!");
     //get the user info from the request
   let email = req.query.userEmail;
    //create sql select query
@@ -17,7 +18,7 @@ let getBalance = async (req, res) =>{
             //if the result of the query has at least one row
             if(Object.keys(rows).length > 0){
               console.log("found the balance: " + rows[0].balance);
-              res.send({success: true, userbalance: rows[0].balance});
+              res.send({success: true, userBalance: rows[0].balance});
             }
             else{
                 console.log("no user with the email: " + email + " exists in the user table.");

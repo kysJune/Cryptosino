@@ -1,4 +1,4 @@
-const {db} = require("./connect");
+const {db} = require("../../connect");
 
 
 //updates the balance of a user

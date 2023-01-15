@@ -26,7 +26,7 @@ function App() {
       pageComponent = <Login  goHome={() => {setPage("Home"); }} logIn = {(newUser) => setUser(newUser)}/>;
     }
     else if(page === 'Register'){
-      pageComponent = <Register goHome={() => {setPage("Home");}} logIn = {(newUser) => {setUser(newUser); console.log(newUser);}}/>;
+      pageComponent = <Register goHome={() => {setPage("Home");}} logIn = {(newUser) => {setUser(newUser); }}/>;
     }
 
     else if(page ==='Slot Machine'){
@@ -47,9 +47,6 @@ function App() {
       </div>
   );
 }
-
-
-
 
 
 

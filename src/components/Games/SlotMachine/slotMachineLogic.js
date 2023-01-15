@@ -55,10 +55,11 @@ export let rotateOne = (wheelId) =>{
     var children = wheelValues.children;
     
     for (let i = 0; i < children.length; ++i) {
-
+    
         let oldpos = parseInt(children[i].getAttribute('position'), 10);
         console.log(oldpos+1);
-        if (oldpos == children.length - 1) {
+        if (oldpos == children.length - 1) { 
+            //loop back around the last wheel value to the beginning of the wheel
             oldpos = 0;
             children[i].setAttribute('position', 0);
         }
@@ -72,7 +73,18 @@ export let rotateOne = (wheelId) =>{
     }
 }
 
-export let spinAllWheels = (e) =>{
+export let spinAllWheels = async (e) =>{
+    //make user pay for spin
+    const result = await payForSpin();
+    if(result === -1){
+        console.log("cannot afford to spin.");
+        return;
+    }
+    else if(result === -666){
+        console.log("error occurred when trying to pay to spin");
+        return;
+    }
+
     //generate random N many rotations for each wheel
 
     let rotations1 = Math.floor((Math.random()) * 20) % 20 + 1;
@@ -194,8 +206,8 @@ let payForSpin = async () =>{
 let validateSymbols = async () =>{
     //get the current symbols in the slot machine
     let symbol1, symbol2, symbol3;
-    //TODO: use querySelector and query by translate value
-
+    
+    let symbols = document.querySelector('[position="TODO"]'); //check what position makes th element show in the slot machine box
     //if all symbols are the same then
     if( ( symbol1 === symbol2 ) && ( symbol3 === symbol2 ) ){
         //if all symbols are diamonds then
@@ -253,13 +265,15 @@ let getBalance = async () =>{
         return -1;
     }
     //get request to grab user balance via SELECT by email
-    const response = await axios.get("user/balance", {userEmail: email});
-    if(response.success){
-        console.log("user balance is: "+ response.balance);
-        return parseFloat(response.balance);
+    const response = await axios.get(`${process.env.REACT_APP_BASEURL}/user/balance`, {params: {userEmail: email} });
+    if(response.data.success == true){
+        console.log("user balance is: "+ response.data.userBalance);
+        console.log(response.data);
+        return parseFloat(response.data.userBalance);
     }
     else {
         console.log("could not get user balance");
+        console.log(response.data);
         return -1;
     }
 }
@@ -277,8 +291,8 @@ let saveBalance = async (newBalance) =>{
             return false;
         }
         //post to backend the new balance via sql UPDATE
-        const response = await axios.post("user/balance/update", {userEmail: email, userBalance: newBalance});
-        if(response.success){
+        const response = await axios.post(`${process.env.REACT_APP_BASEURL}/user/balance/update`, {userEmail: email, userBalance: newBalance});
+        if(response.data.success){
             console.log("succeeded in changing the user balance");
             //TODO: update the header to the new balance
             return true;
@@ -297,7 +311,7 @@ let saveBalance = async (newBalance) =>{
 let updateJackpot = async (didWin) =>{
     let currentJackpot;
     let jackpotElement = document.getElementById("slot-machine-jackpot");
-    console.log("current jackpot: " + newJackpot);
+    
     //get current jackpot
     const response1 = await axios.get("/jackpot");
     if(response1.success){

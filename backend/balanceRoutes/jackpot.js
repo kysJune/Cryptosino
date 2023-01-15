@@ -1,6 +1,6 @@
 //TODO: create jackpot table in mysql db
 
-const {db} = require("./connect");
+const {db} = require("../connect");
 
 
 //returns the current jackpot
