@@ -294,7 +294,8 @@ let saveBalance = async (newBalance) =>{
         const response = await axios.post(`${process.env.REACT_APP_BASEURL}/user/balance/update`, {userEmail: email, userBalance: newBalance});
         if(response.data.success){
             console.log("succeeded in changing the user balance");
-            //TODO: update the header to the new balance
+            // update the header to the new balance
+            displayBalance(newBalance);
             return true;
         }
         else{
@@ -344,5 +345,9 @@ let updateJackpot = async (didWin) =>{
         console.log("could not get current jackpot from DB");
         return -1;
     } 
+}
+
+let displayBalance = (newBalance) =>{
+    document.getElementById("user-balance").innerText = `$${newBalance}`;
 }
 
