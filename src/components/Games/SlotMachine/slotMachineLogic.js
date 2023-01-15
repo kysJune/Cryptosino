@@ -9,7 +9,9 @@ const DIAMOND_PAYOUT = 20;
 const ORANGE_PAYOUT = 5;
 const CHERRY_PAYOUT = 5;
 const BAR_PAYOUT = 0;
+const STARTING_JACKPOT = 100;
 let SEVEN_PAYOUT; //the jackpot value
+
 export let wheelValues = [
     {
         image: "../../../../wheelImages/slotmachine_7.png",
@@ -189,22 +191,55 @@ let payForSpin = async () =>{
 } 
 
 //validateSymbols returns how much player won from the spin 
-let validateSymbols = () =>{
+let validateSymbols = async () =>{
     //get the current symbols in the slot machine
     let symbol1, symbol2, symbol3;
-
+    //TODO: use querySelector and query by translate value
 
     //if all symbols are the same then
-    if(symbol1 === symbol2 && symbol3 === symbol2){
+    if( ( symbol1 === symbol2 ) && ( symbol3 === symbol2 ) ){
         //if all symbols are diamonds then
+        if(symbol1 === 'diamond'){
+            //play the dispense winnings music
 
+            //display winning message
+            return DIAMOND_PAYOUT;
+        }
         //if all symbols are orange then
+        else if(symbol1 === 'orange'){
+            //play the dispense winnings music
 
+            //display winning message
+
+            return ORANGE_PAYOUT;
+        }
         //if all symbols are cherry then
+        else if(symbol1 === 'cherry'){
+             //play the dispense winnings music
 
-        //if all symbols are 7 then they won the jackpot so handle it
+              //display winning message
 
+            return CHERRY_PAYOUT;
+        }
+        //if all symbols are 7 then they won the jackpot
+        else if(symbol1 === '7'){
+            //play the dispense Jackpot music
+            
+            //update jackpot back to STARTING_JACKPOT
+            const winnings = await updateJackpot(true);
+            //display winning message
+
+            return winnings;
+        }
         //if all symbols are BAR then the amount won is 0
+        else {
+            //update the jackpot 
+            const result  = await updateJackpot(false);
+            if(result == -1){
+                console.log("ERROR: did not increment jackpot");
+            }
+            return 0;
+        }
     }
 }
 
@@ -241,7 +276,7 @@ let saveBalance = async (newBalance) =>{
         if(email == undefined){
             return false;
         }
-        //post to backend the new balance 
+        //post to backend the new balance via sql UPDATE
         const response = await axios.post("user/balance/update", {userEmail: email, userBalance: newBalance});
         if(response.success){
             console.log("succeeded in changing the user balance");
@@ -256,7 +291,8 @@ let saveBalance = async (newBalance) =>{
 
 
 //updateJackpot function makes axios post request to add .25 to the current jackpot if 
-//didWin is false if didWin is true then set jackpot to 300 and return the old jackpot
+//didWin is false... if didWin is true then set jackpot to 300 and return the old jackpot
+//returns -1 on error 
 //then update the UI with the new value of the jackpot returned in the res object
 let updateJackpot = async (didWin) =>{
     let currentJackpot;
@@ -267,10 +303,10 @@ let updateJackpot = async (didWin) =>{
     if(response1.success){
         currentJackpot = parseFloat(response1.jackpot); 
         let oldJackpot = currentJackpot;
-         //if the user won the jackpot, reset it to 300 otherwise add half the user's bet to the jackpot
-        currentJackpot = (didWin) ? 300 : ( COST_TO_SPIN / 3 ) + currentJackpot;
-        //request that the database should be updated
-        const response = await axios.post("/jackpot", {newJackpot: currentJackpot});
+         //if the user won the jackpot, reset it to STARTING_JACKPOT otherwise add 1/3 the user's bet to the jackpot
+        currentJackpot = (didWin) ? STARTING_JACKPOT : ( COST_TO_SPIN / 3 ) + currentJackpot;
+        //request that the database should be sql UPDATEd 
+        const response = await axios.post("/jackpot/update", {newJackpot: currentJackpot});
         if(response.success){
             //update the UI so that it shows the new jackpot
             jackpotElement.innerText = currentJackpot;
@@ -287,6 +323,7 @@ let updateJackpot = async (didWin) =>{
 
         else{
             console.log("Error in updating jackpot");
+            return -1;
         }
     }
     else{

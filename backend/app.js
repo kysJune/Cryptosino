@@ -3,11 +3,12 @@ const express = require("express");
 const app = express();
 const cors = require('cors');
 const bcrypt = require('bcryptjs'); //for encrypting user password
-// const bodyParser = require('body-parser');
-require("dotenv").config();
-//middleware that handles jsx form data
-//without bodyParser there is no way to get data from an input field 
-// app.use(bodyParser.urlencoded({ extended: true }));
+const { getBalance } = require("./balanceRoutes/user/getBalance");
+const { saveBalance } = require("./balanceRoutes/user/saveBalance");
+const { updateJackpot, getjackpot } = require("./balanceRoutes/jackpot");
+
+require("dotenv").config(); //allows access to the .env variables
+
 
 //MIDDLEWARE
 
@@ -15,6 +16,8 @@ require("dotenv").config();
 app.use(express.json());
 //for allowing api calls from different origins (front end to back end)
 app.use(cors());
+
+//USER ROUTES 
 
 //handle user registering
 app.post(`/user/register`, (req, res) =>{
@@ -78,8 +81,6 @@ app.post(`/user/register`, (req, res) =>{
 });
 
 
-
-
 app.get("/user/login", (req, res) => {
   
   let email = req.query.email;
@@ -127,10 +128,26 @@ app.get("/user/login", (req, res) => {
   })
 });
 
-app.get("/test", (req, res) =>{
-  res.send("hello");
-});
   
+//END USER ROUTES
+
+
+//BALANCE ROUTES
+
+app.get('user/balance', getBalance);
+
+app.post('user/balance/update', saveBalance);
+
+//END BALANCE ROUTES
+
+//SLOT MACHINE ROUTES
+
+app.get('/jackpot', getjackpot);
+
+app.post("/jackpot/update", updateJackpot);
+
+//END SLOT MACHINE ROUTES
+
 const PORT = process.env.PORT || 8080;
   
 app.listen(PORT, console.log(`Server started on port ${PORT}`));
