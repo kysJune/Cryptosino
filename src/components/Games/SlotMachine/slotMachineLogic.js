@@ -131,6 +131,8 @@ export let spinAllWheels = async (e) =>{
             }
         // });
     }
+    // check if the user won
+    validateSymbols();
 }
 
 
@@ -207,7 +209,8 @@ let validateSymbols = async () =>{
     //get the current symbols in the slot machine
     let symbol1, symbol2, symbol3;
     
-    let symbols = document.querySelector('[position="TODO"]'); //check what position makes th element show in the slot machine box
+    let symbols = document.querySelector('[position="0"]'); //check what position makes th element show in the slot machine box
+
     //if all symbols are the same then
     if( ( symbol1 === symbol2 ) && ( symbol3 === symbol2 ) ){
         //if all symbols are diamonds then
@@ -310,21 +313,20 @@ let saveBalance = async (newBalance) =>{
 //returns -1 on error 
 //then update the UI with the new value of the jackpot returned in the res object
 let updateJackpot = async (didWin) =>{
-    let currentJackpot;
     let jackpotElement = document.getElementById("slot-machine-jackpot");
     
     //get current jackpot
-    const response1 = await axios.get("/jackpot");
-    if(response1.success){
-        currentJackpot = parseFloat(response1.jackpot); 
+    const response1 = await axios.get(`${process.env.REACT_APP_BASEURL}/jackpot`);
+    if(response1.data.success){
+        let currentJackpot = parseFloat(response1.data.jackpot); 
         let oldJackpot = currentJackpot;
          //if the user won the jackpot, reset it to STARTING_JACKPOT otherwise add 1/3 the user's bet to the jackpot
         currentJackpot = (didWin) ? STARTING_JACKPOT : ( COST_TO_SPIN / 3 ) + currentJackpot;
         //request that the database should be sql UPDATEd 
-        const response = await axios.post("/jackpot/update", {newJackpot: currentJackpot});
-        if(response.success){
+        const response = await axios.post(`${process.env.REACT_APP_BASEURL}/jackpot/update`, {newJackpot: currentJackpot});
+        if(response.data.success){
             //update the UI so that it shows the new jackpot
-            jackpotElement.innerText = currentJackpot;
+            jackpotElement.innerText = "Current Jackpot : $" + Math.floor(currentJackpot);
             
             //return the payout if the user won the jackpot
             if(didWin){
@@ -349,5 +351,5 @@ let updateJackpot = async (didWin) =>{
 
 let displayBalance = (newBalance) =>{
     document.getElementById("user-balance").innerText = `$${newBalance}`;
+    document.getElementById("slot-machine-balance").innerText = `Balance : $${newBalance}`;
 }
-

@@ -16,7 +16,7 @@ export let SlotMachine = () =>{
                     <Wheel wheelid="2"/>
                     <Wheel wheelid="3"/>
                 </div>
-                <p id="slot-machine-balance">balance: $500.43</p>
+                <p id="slot-machine-balance">Balance</p>
                 <button id="start-slot-machine-button" onClick={(e) =>{ spinAllWheels(e);}}>
                     SPIN
                 </button>

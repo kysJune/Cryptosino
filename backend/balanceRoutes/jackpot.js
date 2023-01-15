@@ -10,7 +10,7 @@ let getjackpot = async (req, res) =>{
    let sql = "SELECT jackpot FROM jackpot";
    //query the database
    db.getConnection((err, connection) => {
-        if(err){
+        if (err){
             res.send({success: false});
             throw err;
         } 
@@ -39,12 +39,12 @@ let getjackpot = async (req, res) =>{
 
 //updates the current jackpot
 let updateJackpot = async (req, res) =>{
-  //get the new jackpot value from the request
-  let newJackpot = req.body.newJackpot;
-   //create sql select query
-   let sql = "UPDATE jackpot SET jackpot = '" + newJackpot + "'";
-   //query the database
-   db.getConnection((err, connection) => {
+    //get the new jackpot value from the request
+    let newJackpot = req.body.newJackpot;
+    //create sql select query
+    let sql = "UPDATE jackpot SET jackpot = '" + newJackpot + "' WHERE id = 1";
+    //query the database
+    db.getConnection((err, connection) => {
         if(err) {
             res.send({success: false});
             throw err;
@@ -53,7 +53,7 @@ let updateJackpot = async (req, res) =>{
             connection.release(); // return the connection to pool
             if(err){
                 res.send({success: false});
-                 throw err;
+                throw err;
             }
             else{
                 res.send({success: true})
