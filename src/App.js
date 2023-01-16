@@ -6,8 +6,12 @@ import { Register } from './components/Register/registerComponent';
 import { Footer } from './components/Footer/footerComponent';
 import './App.css';
 import { SlotMachine } from './components/Games/SlotMachine/slotMachineComponent';
+import { pauseHomeMusic, playHomeMusic } from './appMusic';
 
 function App() {
+
+  //play home page music
+  
   const  [page, setPage] = useState("Home");
   const [user, setUser] = useState({
     email: "",
@@ -16,6 +20,7 @@ function App() {
     isLoggedIn: false,
   });
   let goToGame = (gameName) =>{
+
     setPage(gameName);
   }
   let pageComponent = page;
@@ -23,10 +28,10 @@ function App() {
       pageComponent = <Home goToGame = {goToGame}/>;
     }
     else if(page === "Login"){
-      pageComponent = <Login  goHome={() => {setPage("Home"); }} logIn = {(newUser) => setUser(newUser)}/>;
+      pageComponent = <Login  goHome={() => {setPage("Home"); playHomeMusic(); }} logIn = {(newUser) => setUser(newUser)}/>;
     }
     else if(page === 'Register'){
-      pageComponent = <Register goHome={() => {setPage("Home");}} logIn = {(newUser) => {setUser(newUser); }}/>;
+      pageComponent = <Register goHome={() => {setPage("Home"); playHomeMusic();}} logIn = {(newUser) => {setUser(newUser); }}/>;
     }
 
     else if(page ==='Slot Machine'){
@@ -37,7 +42,7 @@ function App() {
     <div className="App">
       <Header 
       handleLogin = {() =>{setPage("Login");}}
-      goHome = {() =>{setPage("Home");}}
+      goHome = {() =>{setPage("Home"); playHomeMusic();}}
       handleRegister = {() => {setPage("Register")}}
       isLoggedIn = {user.isLoggedIn}
       data = {user}

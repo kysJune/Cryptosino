@@ -143,7 +143,7 @@ export let spinAllWheels = async (e) =>{
 let leverSound = new Audio("../../../../slotmachine-lever.m4a");
 let spinningSound = new Audio("../../../../slotmachine-spinning.m4a");
 let dispenseWinningSound = new Audio("../../../../slotmachine-win-dispensing.m4a");
-
+let backgroundMusic = new Audio("../../../../slotmachine-background-music.m4a");
 export let playLever = () =>{
     leverSound.play();
 }
@@ -171,6 +171,14 @@ export let startSpinningMusic = (e) =>{
 
 export let playDispenseWinnings = () => {
     dispenseWinningSound.play();
+}
+
+export let playBackgroundMusic = () =>{
+    backgroundMusic.play();
+}
+
+export let pauseBackgroundMusic = () =>{
+    backgroundMusic.pause();
 }
 
 //update balance functions (send to backend and update balance after each spin)
