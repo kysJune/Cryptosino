@@ -28,7 +28,7 @@ function App() {
       pageComponent = <Home goToGame = {goToGame}/>;
     }
     else if(page === "Login"){
-      pageComponent = <Login  goHome={() => {setPage("Home"); playHomeMusic(); }} logIn = {(newUser) => setUser(newUser)}/>;
+      pageComponent = <Login  goHome={() => {setPage("Home"); playHomeMusic();}} logIn = {(newUser) => setUser(newUser)}/>;
     }
     else if(page === 'Register'){
       pageComponent = <Register goHome={() => {setPage("Home"); playHomeMusic();}} logIn = {(newUser) => {setUser(newUser); }}/>;
@@ -41,9 +41,9 @@ function App() {
   return (
     <div className="App">
       <Header 
-      handleLogin = {() =>{setPage("Login");}}
+      handleLogin = {() =>{setPage("Login"); pauseHomeMusic();}}
       goHome = {() =>{setPage("Home"); playHomeMusic();}}
-      handleRegister = {() => {setPage("Register")}}
+      handleRegister = {() => {setPage("Register"); pauseHomeMusic();}}
       isLoggedIn = {user.isLoggedIn}
       data = {user}
       />
