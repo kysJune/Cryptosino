@@ -132,7 +132,10 @@ export let spinAllWheels = async (e) =>{
         // });
     }
     // check if the user won
-    validateSymbols();
+    const x = await validateSymbols();
+    console.log(x);
+    const currBalance = await getBalance();
+    saveBalance(currBalance+x);
 }
 
 
@@ -170,7 +173,9 @@ export let startSpinningMusic = (e) =>{
 }
 
 export let playDispenseWinnings = () => {
-    dispenseWinningSound.play();
+    backgroundMusic.pause();
+    setTimeout(dispenseWinningSound.duration/100, () => {dispenseWinningSound.play()})
+    backgroundMusic.play();
 }
 
 export let playBackgroundMusic = () =>{
@@ -214,56 +219,74 @@ let payForSpin = async () =>{
 
 //validateSymbols returns how much player won from the spin 
 let validateSymbols = async () =>{
-    //get the current symbols in the slot machine
-    let symbol1, symbol2, symbol3;
+    //get the current symbols in the slot machine    
+    let symbols = [...document.querySelectorAll('[position="0"]')]; //check what position makes th element show in the slot machine box
+    let frequencyTable = 100000;
+    //1s is bar, 10s is cherry, 100s is orange, 1000s is diamond, 10000 is 7
     
-    let symbols = document.querySelector('[position="0"]'); //check what position makes th element show in the slot machine box
-
-    //if all symbols are the same then
-    if( ( symbol1 === symbol2 ) && ( symbol3 === symbol2 ) ){
-        //if all symbols are diamonds then
-        if(symbol1 === 'diamond'){
-            //play the dispense winnings music
-
-            //display winning message
-            return DIAMOND_PAYOUT;
+    for(let i=0; i<symbols.length; i++){
+        //console.log(symbols[i].getAttribute("name"));
+        if (symbols[i].getAttribute("name") === '7'){
+            frequencyTable += 10000;
         }
-        //if all symbols are orange then
-        else if(symbol1 === 'orange'){
-            //play the dispense winnings music
-
-            //display winning message
-
-            return ORANGE_PAYOUT;
+        else if (symbols[i].getAttribute("name") === 'diamond'){
+            frequencyTable += 1000;
         }
-        //if all symbols are cherry then
-        else if(symbol1 === 'cherry'){
-             //play the dispense winnings music
-
-              //display winning message
-
-            return CHERRY_PAYOUT;
+        else if (symbols[i].getAttribute("name") === 'orange'){
+            frequencyTable += 100;
         }
-        //if all symbols are 7 then they won the jackpot
-        else if(symbol1 === '7'){
-            //play the dispense Jackpot music
-            
-            //update jackpot back to STARTING_JACKPOT
-            const winnings = await updateJackpot(true);
-            //display winning message
-
-            return winnings;
+        else if (symbols[i].getAttribute("name") === 'cherry'){
+            frequencyTable += 10;
         }
-        //if all symbols are BAR then the amount won is 0
-        else {
+        else if (symbols[i].getAttribute("name") === 'bar'){
+            frequencyTable += 1;
+        }
+    }
+    console.log("frequencyTable=" + frequencyTable);
+    if(Math.floor((frequencyTable%100000)/10000) === 2){
+        return SEVEN_PAYOUT/3;
+    }
+    if(Math.floor((frequencyTable%100000)/10000) === 3){
+        //play the dispense Jackpot music
+        //update jackpot back to STARTING_JACKPOT
+        const winnings = await updateJackpot(true);
+        //display winning message
+        return winnings;
+    }
+    if(Math.floor((frequencyTable%10000)/1000) === 2){
+        playDispenseWinnings();
+        return DIAMOND_PAYOUT/3;
+    }
+    if(Math.floor((frequencyTable%10000)/1000) === 3){
+        playDispenseWinnings();
+        return DIAMOND_PAYOUT;
+    }
+    if(Math.floor((frequencyTable%1000)/100) === 2){
+        playDispenseWinnings();
+        return ORANGE_PAYOUT/3;
+    }
+    if(Math.floor((frequencyTable%1000)/100) === 3){
+        playDispenseWinnings();
+        return ORANGE_PAYOUT;
+    }
+    if(Math.floor((frequencyTable%100)/10) === 2){
+        playDispenseWinnings();
+        return CHERRY_PAYOUT/3;
+    }
+    if(Math.floor((frequencyTable%100)/10) === 3){
+        playDispenseWinnings();
+        return CHERRY_PAYOUT;
+    }
+    //if all symbols are BAR then the amount won is 0
+    else {
             //update the jackpot 
             const result  = await updateJackpot(false);
             if(result == -1){
                 console.log("ERROR: did not increment jackpot");
             }
             return 0;
-        }
     }
+    
 }
 
 //returns the user's current balance from database
