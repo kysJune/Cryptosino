@@ -10,7 +10,7 @@ const ORANGE_PAYOUT = 5;
 const CHERRY_PAYOUT = 5;
 const BAR_PAYOUT = 0;
 const STARTING_JACKPOT = 100;
-let SEVEN_PAYOUT; //the jackpot value
+let SEVEN_PAYOUT = 10; //the jackpot value
 
 export let wheelValues = [
     {
@@ -144,9 +144,13 @@ export let spinAllWheels = async (e) =>{
 //audio sound effects for slot machine game
 
 let leverSound = new Audio("../../../../slotmachine-lever.m4a");
+leverSound.volume = .5;
 let spinningSound = new Audio("../../../../slotmachine-spinning.m4a");
+spinningSound.volume = .5;
 let dispenseWinningSound = new Audio("../../../../slotmachine-win-dispensing.m4a");
-let backgroundMusic = new Audio("../../../../slotmachine-background-music.m4a");
+dispenseWinningSound.volume = .5;
+let backgroundMusic = new Audio("../../../../slotmachine-music.m4a");
+backgroundMusic.volume = .5;
 export let playLever = () =>{
     leverSound.play();
 }
@@ -174,8 +178,9 @@ export let startSpinningMusic = (e) =>{
 
 export let playDispenseWinnings = () => {
     backgroundMusic.pause();
-    setTimeout(dispenseWinningSound.duration/100, () => {dispenseWinningSound.play()})
-    backgroundMusic.play();
+    setTimeout( () => {dispenseWinningSound.play()}, spinningSound.duration * 1000);
+    setTimeout( () =>{ backgroundMusic.play();}, dispenseWinningSound.duration * 1000);
+   
 }
 
 export let playBackgroundMusic = () =>{
@@ -244,6 +249,7 @@ let validateSymbols = async () =>{
     }
     console.log("frequencyTable=" + frequencyTable);
     if(Math.floor((frequencyTable%100000)/10000) === 2){
+        playDispenseWinnings();
         return SEVEN_PAYOUT/3;
     }
     if(Math.floor((frequencyTable%100000)/10000) === 3){
@@ -278,6 +284,7 @@ let validateSymbols = async () =>{
         return CHERRY_PAYOUT;
     }
     //if all symbols are BAR then the amount won is 0
+    //or if there is no winning combination
     else {
             //update the jackpot 
             const result  = await updateJackpot(false);
@@ -326,13 +333,14 @@ let saveBalance = async (newBalance) =>{
         }
         //post to backend the new balance via sql UPDATE
         const response = await axios.post(`${process.env.REACT_APP_BASEURL}/user/balance/update`, {userEmail: email, userBalance: newBalance});
-        if(response.data.success){
+        if(response.data.success == true){
             console.log("succeeded in changing the user balance");
             // update the header to the new balance
             displayBalance(newBalance);
             return true;
         }
         else{
+            console.log(response.data);
             console.log("error occurred! NO CHANGE TO BALANCE!!!");
             return false;
         }
@@ -381,6 +389,13 @@ let updateJackpot = async (didWin) =>{
 }
 
 let displayBalance = (newBalance) =>{
+    newBalance = truncateTo(newBalance, 2);
     document.getElementById("user-balance").innerText = `$${newBalance}`;
     document.getElementById("slot-machine-balance").innerText = `Balance : $${newBalance}`;
+}
+
+let truncateTo = (num, numberOfPlaces)=>{
+
+    return (Math.round(num * Math.pow(10, numberOfPlaces)) / Math.pow(10, numberOfPlaces)).toFixed(numberOfPlaces);
+    
 }
