@@ -11,7 +11,7 @@ import { pauseHomeMusic, playHomeMusic } from './appMusic';
 function App() {
 
   //play home page music
-  
+
   const  [page, setPage] = useState("Home");
   const [user, setUser] = useState({
     email: "",

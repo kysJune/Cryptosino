@@ -1,7 +1,14 @@
 const {db} = require("./connect");
 const express = require("express");
+const session = require("express-session");
 const app = express();
 const cors = require('cors');
+const corsoption = { //to allow requests with session vars.
+  origin: true,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+  exposedHeaders: ["x-auth-token"]
+};
 const bcrypt = require('bcryptjs'); //for encrypting user password
 const { getBalance } = require("./balanceRoutes/user/getBalance");
 const { saveBalance } = require("./balanceRoutes/user/saveBalance");
@@ -17,7 +24,34 @@ require("dotenv").config(); //allows access to the .env variables
 //middleware for parsing JSON
 app.use(express.json());
 //for allowing api calls from different origins (front end to back end)
-app.use(cors());
+app.use(cors(corsoption));
+
+// Session Setup
+app.use(session({
+  
+  // It holds the secret key for session
+  secret: 'Your_Secret_Key',
+
+  // Forces the session to be saved
+  // back to the session store
+  resave: true,
+
+  // Forces a session that is "uninitialized"
+  // to be saved to the store
+  saveUninitialized: true
+}));
+//END MIDDLEWARE
+
+app.get("/loginStatus", (req, res) =>{
+  console.log("herer:" + req.session.isLoggedIn);
+  if(req.session.isLoggedIn == true){
+    res.send({isLoggedIn:true, userData: {email: req.session.email, balance: req.session.balance}});
+  }
+  else{
+    res.send({isLoggedIn: false, userData: {}});
+  }
+
+});
 
 //USER ROUTES 
 
@@ -67,15 +101,18 @@ app.post(`/user/register`, (req, res) =>{
               });
               //if the result of the query is good, then {
             
-              //redirect the user to the Home page again 
-              
+              //set that the user is logged in in the session
+              req.session.name = 'email';
+              req.session.isLoggedIn = true;
+              req.session.email = email;
+              req.session.balance = 1000;
               //change the state of the header component in the front end
               //}
               res.send({
                 success: true,
                 userEmail: email,
                 userPassword: hashedPassword,
-                userBalance: 5
+                userBalance: 1000
               });
           }
       });

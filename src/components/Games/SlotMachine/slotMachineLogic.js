@@ -1,5 +1,5 @@
 import axios from "axios";
-
+axios.defaults.withCredentials = true; //allows the use of express sessions
 //it costs 50 cents to spin the wheel
 const COST_TO_SPIN = 0.5;
 
